@@ -1,0 +1,43 @@
+[tool.mypy]
+python_version = "3.12"
+show_error_context = true    # エラー時のメッセージを詳細表示
+show_column_numbers = true   # エラー発生箇所の行数/列数を表示
+disallow_untyped_defs = true # 関数定義の引数/戻り値に型アノテーション必須
+no_implicit_optional = true  # デフォルト引数に None を取る場合型アノテーションに Optional 必須
+check_untyped_defs = true    # 型注釈がない関数やメソッドに対して型チェックを行う
+warn_redundant_casts = true  # 冗長なキャストに警告
+
+[[tool.mypy.overrides]]
+# サードパーティの[import-untyped]を無視する
+module = [
+    "django.*",
+]
+ignore_missing_imports = true
+follow_imports = "skip"
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "D1",    # undocumented
+    "D203",  # one blank line before class
+    "D213",  # multi-line summary second line
+    "TD001", # invalid todo tag
+    "TD002", # missing todo author
+    "TD003", # missing todo link
+    "PD011", # pandas use of dot values
+]
+unfixable = [
+    "F401", # unused import
+    "F841", # unused variable
+]
+
+logger-objects = ["src.library.logger.LOGGER"]
+
+[tool.ruff.lint.pylint]
+max-args = 6

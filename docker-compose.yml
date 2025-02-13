@@ -1,0 +1,42 @@
+services:
+  web:
+    build:
+      context: ./docker/app
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./docker/app/src:/app
+    command: sleep infinity
+    environment:
+      - DJANGO_DEBUG=1
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=djangoapp
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - web.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    build:
+      context: ./docker/db
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./data/postgresql/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=djangoapp
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "djangoapp"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+      timeout: 5s

@@ -1,0 +1,39 @@
+{
+	"name": "Django Development",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "web",
+	"workspaceFolder": "/app",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"batisteo.vscode-django",
+				"matangover.mypy",
+				"oderwat.indent-rainbow",
+				"charliermarsh.ruff",
+				"tamasfe.even-better-toml"
+			],
+			"settings": {
+				"editor.renderWhitespace": "all",
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+					"source.organizeImports": "always"
+				},
+				"files.trimTrailingWhitespace": true,
+				"files.insertFinalNewline": true,
+				"mypy.runUsingActiveInterpreter": true,
+				"python.defaultInterpreterPath": "/usr/local/bin/python",
+				"ruff.importStrategy": "useBundled",
+				"[python]": {
+					"editor.codeActionsOnSave": {
+						"source.fixAll.ruff": "explicit",
+						"source.organizeImports.ruff": "explicit"
+					},
+					"editor.defaultFormatter": "charliermarsh.ruff",
+					"editor.formatOnSave": true
+				}
+			}
+		}
+	},
+	"postCreateCommand": "python -m pip install --user mypy"
+}
