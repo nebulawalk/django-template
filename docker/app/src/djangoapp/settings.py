@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = hosts.split(",") if (hosts := os.getenv("DJANGO_ALLOWED_HOSTS")) else ["*"]
 
 
 # Application definition
@@ -75,25 +75,13 @@ WSGI_APPLICATION = "djangoapp.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": os.getenv("DJANGO_DB_ENGINE"),
+        "NAME": os.getenv("DJANGO_DB_NAME"),
+        "USER": os.getenv("DJANGO_DB_USER"),
+        "PASSWORD": os.getenv("DJANGO_DB_PASSWORD"),
+        "HOST": os.getenv("DJANGO_DB_HOST"),
+        "PORT": os.getenv("DJANGO_DB_PORT"),
     },
-    # "mysql": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": os.getenv("MYSQL_DATABASE"),
-    #     "USER": os.getenv("MYSQL_USER"),
-    #     "PASSWORD": os.getenv("MYSQL_PASSWORD"),
-    #     "HOST": os.getenv("MYSQL_HOST"),
-    #     "PORT": os.getenv("MYSQL_PORT"),
-    # },
-    # "postgres": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     "NAME": os.getenv("POSTGRES_DB"),
-    #     "USER": os.getenv("POSTGRES_USER"),
-    #     "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-    #     "HOST": os.getenv("POSTGRES_HOST"),
-    #     "PORT": os.getenv("POSTGRES_PORT"),
-    # },
 }
 
 

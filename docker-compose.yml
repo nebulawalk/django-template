@@ -6,13 +6,6 @@ services:
     volumes:
       - ./docker/app/src:/app
     command: sleep infinity
-    environment:
-      - DJANGO_DEBUG=1
-      - POSTGRES_HOST=db
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=djangoapp
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
     env_file:
       - .env
     ports:
